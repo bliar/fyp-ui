@@ -94,7 +94,7 @@ form.convFormDynamic textarea.userInputDynamic {
     outline: none;
     font-size: 0.905rem;
     float: left;
-    width: calc(100% - 70px);
+    width: calc(100% - 150px);
     line-height: 1.3em;
     min-height: 1.7em;
     /*max-height: 10rem;*/
