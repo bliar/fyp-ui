@@ -312,7 +312,7 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                                                + '" class="convFormDynamic"><div class="options dragscroll"></div><input id="'
                                                + parameters.inputIdName 
                                                + '" type="text" placeholder="'+ parameters.placeHolder 
-                                               + '" class="userInputDynamic"></><button id="start_button" onclick="startButton(event)"><img id="start_img" src="../fyp-chatbot/mic.gif" alt="Start"></button><button type="submit" class="submit" width = 50px>'
+                                               + '" class="userInputDynamic"></><button id="start_button" onclick="startButton(event)"><img id="start_img" src="../fyp-chatbot/mic.gif" alt="Start"></button><button type="submit" class="submit" width = 20px>'
                                                + parameters.buttonText
                                                + '</button><span class="clear"></span></form>');
                     break;
