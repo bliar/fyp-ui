@@ -99,7 +99,7 @@ form.convFormDynamic textarea.userInputDynamic {
     outline: none;
     font-size: 0.905rem;
     float: left;
-    width: calc(100% - 50px);
+    width: calc(100% - 100px);
     line-height: 1.3em;
     min-height: 1.7em;
     /*max-height: 10rem;*/
@@ -296,8 +296,8 @@ form.convFormDynamic button.submit {
     cursor: pointer;
     border-radius: 8px;
     font-size: 1.1rem;
-    width: 20x;
-    height: 20px;
+    width: 50x;
+    height: 50px;
     margin-top: 4px;
     background: #fff;
     outline: none !important;
