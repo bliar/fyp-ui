@@ -89,8 +89,6 @@ ConvState.prototype.printQuestion = function(){
     
     setTimeout(function(){
         messageObj.html(question);
-        console.log("==========Mark C");
-        console.log(question);
         messageObj.removeClass('typing').addClass('ready');
         if(this.current.input.type=="select"){
             this.printAnswers(this.current.input.answers, this.current.input.multiple);
@@ -206,8 +204,6 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
         this.scrollDown();
     }.bind(this), 100);
 
-    console.log("==========Mark B=========");
-    // console.log(this.current.input.element);
     $(this.form).append(this.current.input.element);
     console.log(this.dialogue);
     if(this.dialogue){
@@ -384,7 +380,7 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                 recognition.onstart = function(){
                     console.log("in start function");
                     recognizing = true;
-                    $(start_img).src = '../fyp-chatbot/mic-animate.gif';
+                    $(start_img)[0].src = '../fyp-chatbot/mic-animate.gif';
                 };
 
 
@@ -414,10 +410,10 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                     if (ignore_onend){
                         return;
                     }
-                    $(start_img).src='../fyp-chatbot/mic.gif';
+                    $(start_img)[0].src='../fyp-chatbot/mic.gif';
                     console.log(final_transcript);
-
-                    $(parameters.inputIdName).value=final_transcript;
+                    console.log($('#userInput')[0]);
+                    $('#userInput')[0].value=final_transcript;
                     /*
                     if (final_transcript){
                         console.log('get something');
@@ -462,7 +458,8 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                 final_transcript = '';
                 recognition.start();
                 ignore_onend = false;
-                $(start_img).src = '../fyp-chatbot/mic-slash.gif';
+                // console.log($(start_img)[0]);
+                // $(start_img)[0].src = '../fyp-chatbot/mic-animate.gif';
                 start_timestamp = event.timeStamp;
             });
 
