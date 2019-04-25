@@ -8,12 +8,13 @@ function SingleConvState(input){
 SingleConvState.prototype.hasNext = function(){
     return this.next;
 };
-function ConvState(wrapper, SingleConvState, form, params) {
+function ConvState(wrapper, SingleConvState, form, params, dialogue) {
     this.form = form;
     this.wrapper = wrapper;
     this.current = SingleConvState;
     this.answers = {};
     this.parameters = params;
+    this.dialogue = 0;
     this.scrollDown = function() {
         $(this.wrapper).find('#messages').stop().animate({scrollTop: $(this.wrapper).find('#messages')[0].scrollHeight}, 600);
     }.bind(this);
@@ -85,6 +86,7 @@ ConvState.prototype.printQuestion = function(){
     catch(e)
     {}
     var messageObj = $(this.wrapper).find('.message.typing');
+    
     setTimeout(function(){
         messageObj.html(question);
         messageObj.removeClass('typing').addClass('ready');
@@ -105,9 +107,11 @@ ConvState.prototype.printQuestion = function(){
             }
         }
         $(this.wrapper).find(this.parameters.inputIdHashTagName).focus();
-    }.bind(this), 500);
+    }.bind(this), 50);
+    
 };
 ConvState.prototype.printAnswers = function(answers, multiple){
+    console.log("Printing Answer")
     this.wrapper.find('div.options div.option').remove();
     if(multiple){
         for(var i in answers){
@@ -201,11 +205,14 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
     }.bind(this), 100);
 
     $(this.form).append(this.current.input.element);
-    var messageObj = $('<div class="message to typing"><div class="typing_loader"></div></div>');
-    setTimeout(function(){
-        $(this.wrapper).find('#messages').append(messageObj);
-        this.scrollDown();
-    }.bind(this), 150);
+    console.log(this.dialogue);
+    if(this.dialogue){
+        var messageObj = $('<div class="message to typing"><div class="typing_loader"></div></div>');    
+        setTimeout(function(){
+            $(this.wrapper).find('#messages').append(messageObj);
+            this.scrollDown();
+        }.bind(this), 150);
+    }
 
     this.parameters.eventList.onInputSubmit(this, function(){
         //goes to next state and prints question
@@ -305,7 +312,7 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
 
             var inputForm;
             parameters.inputIdHashTagName = '#' + parameters.inputIdName;
-
+            console.log(parameters.inputIdName);
             switch(parameters.typeInputUi) {
                 case 'input':
                     inputForm = $('<form id="' + parameters.formIdName 
@@ -373,7 +380,7 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                 recognition.onstart = function(){
                     console.log("in start function");
                     recognizing = true;
-                    $(start_img).src = '../fyp-chatbot/mic-animate.gif';
+                    $(start_img)[0].src = '../fyp-chatbot/mic-animate.gif';
                 };
 
 
@@ -403,10 +410,13 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                     if (ignore_onend){
                         return;
                     }
-                    $(start_img).src='../fyp-chatbot/mic.gif';
+                    $(start_img)[0].src='../fyp-chatbot/mic.gif';
                     console.log(final_transcript);
+                    console.log($('#userInput')[0]);
+                    $('#userInput')[0].value=final_transcript;
+                    /*
                     if (final_transcript){
-                        console.log('get something')
+                        console.log('get something');
                         $.ajax({
                             url: "http://1a141ca7.ngrok.io/voice",
                             type: 'POST',
@@ -415,6 +425,7 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                             success: function(res){alert("good");}
                         });
                     }
+                    */
                 };
 
                 recognition.onresult = function(event) {
@@ -447,7 +458,8 @@ ConvState.prototype.answerWith = function(answerText, answerObject) {
                 final_transcript = '';
                 recognition.start();
                 ignore_onend = false;
-                $(start_img).src = '../fyp-chatbot/mic-slash.gif';
+                // console.log($(start_img)[0]);
+                // $(start_img)[0].src = '../fyp-chatbot/mic-animate.gif';
                 start_timestamp = event.timeStamp;
             });
 
